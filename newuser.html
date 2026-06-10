@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>NoteApp</title>
+    <link rel="shortcut icon" href="noteapp.png" type="image/png">
+    <script defer src="create-user.js"></script>
+</head>
+<body>
+    <h1>Create New User</h1>
+
+    <form id="new-user-form">
+        <label for="new-username">Username:</label>
+        <input type="text" id="new-username" name="username" required>
+        
+        <label for="new-password">Password:</label>
+        <input type="password" id="new-password" name="password" required>
+
+        <button type="submit">Create account.</button>
+
+    </form>
+    <h3 id="status-message"></h3>
+</body>
+</html>
