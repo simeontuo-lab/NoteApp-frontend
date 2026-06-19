@@ -12,7 +12,7 @@ loginForm.addEventListener("submit", async (event) => {
     statusMessage.className = "status-message";
 
     try {
-        const response = await fetch(`${baseURL}/login`, {
+        const response = await fetch(`${baseURL}/login/password`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({

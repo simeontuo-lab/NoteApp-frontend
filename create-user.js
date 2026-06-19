@@ -11,7 +11,7 @@ form.addEventListener("submit", async (event) => {
     statusMessage.innerText = "Creating account..."
     statusMessage.className = "status-message"
 
-    const response = await fetch(`${baseURL}/users`, {
+    const response = await fetch(`${baseURL}/signup`, {
         method: "POST",
         headers: {"Content-Type": "application/json"},
         body: JSON.stringify({
