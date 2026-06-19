@@ -1,6 +1,37 @@
 // ==========================================================================
 // 1. DOM Elements & Initial Setup
 // ==========================================================================
+
+// Check authentication before loading the app
+function checkAuthentication() {
+    const authToken = localStorage.getItem('authToken');
+    if (!authToken) {
+        window.location.href = 'login.html';
+        return false;
+    }
+    
+    // Display username
+    const username = localStorage.getItem('username');
+    const usernameDisplay = document.getElementById('username-display');
+    if (usernameDisplay && username) {
+        usernameDisplay.textContent = `Welcome, ${username}`;
+    }
+    
+    return true;
+}
+
+// Logout function
+function logout() {
+    localStorage.removeItem('authToken');
+    localStorage.removeItem('username');
+    window.location.href = 'login.html';
+}
+
+// Check auth on page load
+if (!checkAuthentication()) {
+    throw new Error('Not authenticated');
+}
+
 const noteForm = document.getElementById('note-form');
 const baseURL = `https://appnote-backend-1.onrender.com`;
 const bodyInput = document.getElementById('content'); // Maps to backend 'body'
@@ -13,6 +44,12 @@ let currentTitleFilter = null;
 // ==========================================================================
 // 2. Event Listeners
 // ==========================================================================
+
+// Handle logout button
+const logoutBtn = document.getElementById('logout-btn');
+if (logoutBtn) {
+    logoutBtn.addEventListener('click', logout);
+}
 
 // Handle form submission to create a post on the API
 noteForm.addEventListener('submit', async (e) => {

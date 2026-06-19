@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Login - NoteApp</title>
+    <script defer src="login.js"></script>
+</head>
+<body>
+    <div class="auth-container">
+        <header>
+            <h1>📝 NoteBook</h1>
+        </header>
+
+        <main class="auth-main">
+            <div class="auth-card">
+                <h2>Login</h2>
+                
+                <form id="login-form">
+                    <div class="form-group">
+                        <label for="login-username">Username:</label>
+                        <input type="text" id="login-username" name="username" placeholder="Enter your username" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="login-password">Password:</label>
+                        <input type="password" id="login-password" name="password" placeholder="Enter your password" required>
+                    </div>
+
+                    <button type="submit" class="btn-primary">Login</button>
+                </form>
+
+                <p id="status-message" class="status-message"></p>
+
+                <div class="auth-footer">
+                    <p>Don't have an account? <a href="newuser.html">Create one here</a></p>
+                </div>
+            </div>
+        </main>
+    </div>
+</body>
+</html>

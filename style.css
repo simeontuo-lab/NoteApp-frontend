@@ -206,3 +206,200 @@ button[type="submit"]:active {
     border-radius: 8px;
     border: 2px dashed #e2e8f0;
 }
+
+/* ==========================================================================
+   5. Authentication Pages (Login & Registration)
+   ========================================================================== */
+.auth-container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    padding: 1rem;
+}
+
+.auth-container header {
+    position: absolute;
+    top: 2rem;
+    text-align: center;
+    margin-bottom: 0;
+}
+
+.auth-container header h1 {
+    color: #ffffff;
+    font-size: 2rem;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.auth-main {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    max-width: 400px;
+}
+
+.auth-card {
+    background-color: #ffffff;
+    border-radius: 12px;
+    padding: 2.5rem;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+    width: 100%;
+}
+
+.auth-card h2 {
+    text-align: center;
+    color: #2d3748;
+    font-size: 1.8rem;
+    margin-bottom: 1.5rem;
+    font-weight: 600;
+}
+
+.auth-card .form-group {
+    margin-bottom: 1.5rem;
+}
+
+.auth-card label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: #4a5568;
+}
+
+.auth-card input {
+    width: 100%;
+    padding: 0.75rem;
+    border: 2px solid #e2e8f0;
+    border-radius: 6px;
+    font-size: 0.95rem;
+    color: #1a202c;
+    transition: border-color 0.2s ease;
+}
+
+.auth-card input:focus {
+    outline: none;
+    border-color: #667eea;
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.btn-primary {
+    width: 100%;
+    background-color: #667eea;
+    color: #ffffff;
+    border: none;
+    padding: 0.75rem;
+    font-size: 1rem;
+    font-weight: 600;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    margin-top: 1rem;
+}
+
+.btn-primary:hover {
+    background-color: #5568d3;
+}
+
+.btn-primary:active {
+    background-color: #4c51bf;
+}
+
+.auth-footer {
+    text-align: center;
+    margin-top: 1.5rem;
+    color: #718096;
+}
+
+.auth-footer a {
+    color: #667eea;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.auth-footer a:hover {
+    text-decoration: underline;
+}
+
+.status-message {
+    margin-top: 1rem;
+    padding: 0.75rem;
+    border-radius: 6px;
+    text-align: center;
+    font-weight: 500;
+    display: none;
+}
+
+.status-message:not(:empty) {
+    display: block;
+    background-color: #c6f6d5;
+    color: #22543d;
+    border: 1px solid #9ae6b4;
+}
+
+.status-message.error {
+    background-color: #fed7d7;
+    color: #742a2a;
+    border: 1px solid #fc8181;
+}
+
+.status-message.success {
+    background-color: #c6f6d5;
+    color: #22543d;
+    border: 1px solid #9ae6b4;
+}
+
+/* ==========================================================================
+   6. Header with Logout Button
+   ========================================================================== */
+.header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 900px;
+    margin: 0 auto;
+    gap: 1rem;
+}
+
+.username-text {
+    font-size: 0.9rem;
+    color: #718096;
+    font-weight: 500;
+}
+
+.logout-button {
+    background-color: #e53e3e;
+    color: #ffffff;
+    border: none;
+    padding: 0.5rem 1rem;
+    font-size: 0.85rem;
+    font-weight: 600;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.logout-button:hover {
+    background-color: #c53030;
+}
+
+.logout-button:active {
+    background-color: #9b2c2c;
+}
+
+/* ==========================================================================
+   7. Title Filter Link
+   ========================================================================== */
+.title-filter-link {
+    color: #2d3748;
+    text-decoration: none;
+    cursor: pointer;
+    transition: color 0.2s ease;
+}
+
+.title-filter-link:hover {
+    color: #3182ce;
+    text-decoration: underline;
+}
