@@ -1,4 +1,4 @@
-const baseURL = `https://appnote-backend-1.onrender.com`
+const baseURL = window.location.protocol === "file:" ? "http://localhost:3000" : window.location.origin
 const form = document.getElementById("new-user-form")
 const statusMessage = document.getElementById("status-message")
 

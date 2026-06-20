@@ -1,8 +1,4 @@
-// ==========================================================================
-// 1. DOM Elements & Initial Setup
-// ==========================================================================
 
-// Check authentication before loading the app
 function checkAuthentication() {
     const authToken = localStorage.getItem('authToken');
     if (!authToken) {
@@ -10,7 +6,7 @@ function checkAuthentication() {
         return false;
     }
     
-    // Display username
+    
     const username = localStorage.getItem('username');
     const usernameDisplay = document.getElementById('username-display');
     if (usernameDisplay && username) {
@@ -20,43 +16,39 @@ function checkAuthentication() {
     return true;
 }
 
-// Logout function
+
 function logout() {
     localStorage.removeItem('authToken');
     localStorage.removeItem('username');
     window.location.href = 'login.html';
 }
 
-// Check auth on page load
+
 if (!checkAuthentication()) {
     throw new Error('Not authenticated');
 }
 
 const noteForm = document.getElementById('note-form');
-const baseURL = `https://appnote-backend-1.onrender.com`;
-const bodyInput = document.getElementById('content'); // Maps to backend 'body'
-const titleInput = document.getElementById('title');  // Maps to backend 'title'
-const allPostsContainer = document.getElementById('allNotes'); // Your main notes container
+const baseURL = window.location.protocol === "file:" ? "http://localhost:3000" : window.location.origin;
+const bodyInput = document.getElementById('content'); 
+const titleInput = document.getElementById('title');  
+const allPostsContainer = document.getElementById('allNotes'); 
 
-// Global state tracking for title filtering
+
 let currentTitleFilter = null;
 
-// ==========================================================================
-// 2. Event Listeners
-// ==========================================================================
 
-// Handle logout button
 const logoutBtn = document.getElementById('logout-btn');
 if (logoutBtn) {
     logoutBtn.addEventListener('click', logout);
 }
 
-// Handle form submission to create a post on the API
 noteForm.addEventListener('submit', async (e) => {
     e.preventDefault();
 
     const bodyText = bodyInput.value.trim();
     const titleText = titleInput.value.trim();
+    const username = localStorage.getItem('username');
 
     if (!bodyText || !titleText) return;
 
@@ -66,13 +58,14 @@ noteForm.addEventListener('submit', async (e) => {
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
                 body: bodyText,
-                title: titleText
+                title: titleText,
+                username: username
             })
         });
 
         if (response.ok) {
             noteForm.reset();
-            // Refresh posts (and maintain filter if applicable)
+            
             fetchAndRenderPosts(currentTitleFilter);
         } else {
             console.error("Failed to save post to the server.");
@@ -82,32 +75,27 @@ noteForm.addEventListener('submit', async (e) => {
     }
 });
 
-// Initialize App
+
 fetchAndRenderPosts();
 
-// ==========================================================================
-// 3. Core Async API Functions
-// ==========================================================================
 
-/**
- * Fetches data from the server, filters if needed, and kicks off rendering.
- */
 async function fetchAndRenderPosts(titleFilter = null) {
     currentTitleFilter = titleFilter; 
     allPostsContainer.innerHTML = '<li class="empty-state">Loading notes...</li>';
 
     try {
-        const response = await fetch(`${baseURL}/posts`);
+        const username = localStorage.getItem('username');
+        const response = await fetch(`${baseURL}/posts?username=${encodeURIComponent(username)}`);
         if (!response.ok) throw new Error("Server response error");
         
         let posts = await response.json();
 
-        // If title filter is applied
+        
         if (titleFilter) {
             posts = posts.filter(post => post.title === titleFilter);
             renderHeaderMeta(titleFilter, posts.length);
         } else {
-            // Remove meta header if we are viewing all posts
+            
             const existingMeta = document.getElementById('filter-meta');
             if (existingMeta) existingMeta.remove();
         }
@@ -119,12 +107,11 @@ async function fetchAndRenderPosts(titleFilter = null) {
     }
 }
 
-/**
- * Sends a DELETE request to the server API
- */
+
 async function deletePost(postId) {
     try {
-        const response = await fetch(`${baseURL}/posts/${postId}`, {
+        const username = localStorage.getItem('username');
+        const response = await fetch(`${baseURL}/posts/${postId}?username=${encodeURIComponent(username)}`, {
             method: "DELETE"
         });
         
@@ -138,13 +125,7 @@ async function deletePost(postId) {
     }
 }
 
-// ==========================================================================
-// 4. DOM Rendering Functions
-// ==========================================================================
 
-/**
- * Generates the title tracking header bar with a cancel button
- */
 function renderHeaderMeta(titleValue, count) {
     let metaDiv = document.getElementById('filter-meta');
     
@@ -165,9 +146,7 @@ function renderHeaderMeta(titleValue, count) {
     });
 }
 
-/**
- * Maps post items into semantic HTML lists using safe escaping
- */
+
 function renderPostsToPage(posts) {
     allPostsContainer.innerHTML = '';
 
@@ -176,7 +155,7 @@ function renderPostsToPage(posts) {
         return;
     }
 
-    // reverse elements to show newest first if the API returns them chronologically
+    
     [...posts].reverse().forEach(post => {
         const li = document.createElement('li');
         li.className = 'note-item';
@@ -198,13 +177,13 @@ function renderPostsToPage(posts) {
             </article>
         `;
 
-        // Attach event listener directly to the dynamically created title link
+        
         li.querySelector('.title-filter-link').addEventListener('click', (e) => {
             e.preventDefault();
             fetchAndRenderPosts(e.target.dataset.title);
         });
 
-        // Attach event listener to the delete button
+        
         li.querySelector('.delete-btn').addEventListener('click', () => {
             deletePost(post._id);
         });
@@ -213,13 +192,7 @@ function renderPostsToPage(posts) {
     });
 }
 
-// ==========================================================================
-// 5. Helper / Formatting Functions
-// ==========================================================================
 
-/**
- * Calculates a friendly "time ago" format string
- */
 function getRelativeTime(timestamp) {
     const secondsSincePosted = Math.round((Date.now() - new Date(timestamp).getTime()) / 1000);
     
@@ -239,15 +212,12 @@ function getRelativeTime(timestamp) {
         numberOfUnits = Math.round(secondsSincePosted / 86400);
     }
 
-    // Fallback if local system clock discrepancies result in negative numbers
+   
     if (numberOfUnits < 0) return "Just now";
 
     return `posted ${numberOfUnits} ${unitOfTime}${numberOfUnits !== 1 ? "s" : ""} ago.`;
 }
 
-/**
- * Prevents Cross-Site Scripting (XSS)
- */
 function escapeHTML(str) {
     if (!str) return '';
     return str.replace(/[&<>'"]/g, 

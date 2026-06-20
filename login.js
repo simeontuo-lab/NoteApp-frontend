@@ -1,4 +1,4 @@
-const baseURL = `https://appnote-backend-1.onrender.com`;
+const baseURL = window.location.protocol === "file:" ? "http://localhost:3000" : window.location.origin;
 const loginForm = document.getElementById("login-form");
 const statusMessage = document.getElementById("status-message");
 
@@ -29,11 +29,12 @@ loginForm.addEventListener("submit", async (event) => {
 
         const data = await response.json();
         
-        // Store auth token in localStorage
-        localStorage.setItem("authToken", data.token);
-        localStorage.setItem("username", username);
+        // Store auth token, user ID, and username in localStorage
+        localStorage.setItem("userId", data._id);
+        localStorage.setItem("username", data.username);
+        localStorage.setItem("authToken", data._id);
         
-        statusMessage.innerText = `Welcome, ${username}!`;
+        statusMessage.innerText = `Welcome, ${data.username}!`;
         statusMessage.className = "status-message success";
         
         // Redirect to the note page
